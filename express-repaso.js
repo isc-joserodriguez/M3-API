@@ -30,4 +30,4 @@ app.delete('/', (req, res) => {
 /* 5.- Iniciar servidor */
 app.listen(process.env.PORT, () => {
     console.log('Se inició el servidor en el puerto ' + process.env.PORT);
-})
+}) 
