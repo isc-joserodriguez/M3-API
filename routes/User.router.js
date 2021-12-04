@@ -10,6 +10,6 @@ const express = require('express'),
 router.post('/', signup);
 router.get('/', getUsers);
 router.put('/', updateUser);
-router.delete('/', deleteUser);
+router.delete('/:id', deleteUser);
 
 module.exports = router;
