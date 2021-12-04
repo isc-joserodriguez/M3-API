@@ -7,11 +7,13 @@ const app = express();
 /* 3.- Agregar Middlewares */
 app.use(express.json());
 /* 4.- Definir las rutas */
-app.post('/', (req, res) => {
+const funcion = (req, res) => {
     res.json({
         mensaje: 'Se agregó el elemento'
     })
-});
+}
+
+app.post('/', funcion);
 app.get('/', (req, res) => {
     res.json({
         mensaje: 'Se obtuvo el elemento'
@@ -30,4 +32,4 @@ app.delete('/', (req, res) => {
 /* 5.- Iniciar servidor */
 app.listen(process.env.PORT, () => {
     console.log('Se inició el servidor en el puerto ' + process.env.PORT);
-}) 
+})
