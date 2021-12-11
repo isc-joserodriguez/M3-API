@@ -7,6 +7,7 @@ const PostSchema = new mongoose.Schema({
     body: { type: String },
     image: { type: String },
     state: { type: Boolean },
+    category: { type: mongoose.ObjectId, ref: 'Category' }
 });
 
 mongoose.model('Post', PostSchema, 'collectionPost');

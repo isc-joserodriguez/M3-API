@@ -21,7 +21,7 @@ const createPost = async (req, res) => {
 
 const getPosts = async (req, res) => {
     try {
-        const resp = await Post.find();
+        const resp = await Post.find().populate('category');
 
         if (resp.length === 0) {
             return res.json({
