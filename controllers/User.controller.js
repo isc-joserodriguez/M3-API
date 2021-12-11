@@ -10,7 +10,7 @@ const signup = async (req, res) => {
 
         return res.json({
             menssage: 'User created successfully',
-            detail: resp
+            detail: resp.generateJWT()
         })
     } catch (e) {
         return res.json({
@@ -21,6 +21,7 @@ const signup = async (req, res) => {
 }
 
 const getUsers = async (req, res) => {
+    console.log(req.campo.idUser)
     try {
         const resp = await User.find();
 
@@ -66,7 +67,7 @@ const login = async (req, res) => {
         if (resp.password === password) {
             return res.json({
                 message: 'Ok',
-                detail: resp
+                detail: resp.generateJWT()
             })
         }
 

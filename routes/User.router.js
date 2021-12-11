@@ -1,4 +1,5 @@
 const express = require('express'),
+    auth = require('../middlewares/auth'),
     router = express.Router(),
     {
         signup,
@@ -10,7 +11,7 @@ const express = require('express'),
 
 router.post('/signup', signup);
 router.post('/login', login);
-router.get('/', getUsers);
+router.get('/', auth, getUsers);
 router.put('/', updateUser);
 router.delete('/:id', deleteUser);
 
