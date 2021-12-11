@@ -5,23 +5,25 @@ const createPost = async (req, res) => {
     try {
         const post = new Post(req.body);
 
+        //const resp = await (await post.save()).populate('category');
+
         const resp = await post.save();
 
         return res.json({
             menssage: 'Post created successfully',
-            detail: resp
+            detail: await resp.populate('category'),
         })
     } catch (e) {
         return res.json({
             menssage: 'Error',
-            detail: e
+            detail: e.message
         })
     }
 }
 
 const getPosts = async (req, res) => {
     try {
-        const resp = await Post.find().populate('category');
+        const resp = await Post.find().populate('category').populate('user');
 
         if (resp.length === 0) {
             return res.json({
@@ -37,7 +39,7 @@ const getPosts = async (req, res) => {
     } catch (e) {
         return res.json({
             menssage: 'Error',
-            detail: e
+            detail: e.message
         })
     }
 }
