@@ -4,8 +4,13 @@ const mongoose = require('mongoose'),
 
 const signup = async (req, res) => {
     try {
+        // Creamos una instancia de USUARIO
         const user = new User(req.body);
-
+        
+        //Encriptar contraseña
+        user.hashPassword(req.body.password)
+        
+        // Guardamos al USUARIO
         const resp = await user.save();
 
         return res.json({

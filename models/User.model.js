@@ -1,6 +1,7 @@
 /* Instanciamos mongoose */
 const mongoose = require('mongoose'),
-    jwt = require('jsonwebtoken');
+    jwt = require('jsonwebtoken'),
+    crypto = require('crypto');
 
 /* Creamos nuestro Schema */
 const UserSchema = new mongoose.Schema({
@@ -8,12 +9,19 @@ const UserSchema = new mongoose.Schema({
     lastname: { type: String, default: 'Perez' },
     dob: { type: Date },
     mail: { type: String, required: [true, 'Se requiere el email'] },
-    password: { type: String, required: [true, 'Se requiere el password'] }
+    password: { type: String },
+    salt: { type: String }
 });
 
 /* Agregamos método para generar token */
 UserSchema.methods.generateJWT = function () {
     return jwt.sign({ idUser: this._id }, process.env.SECRET_JWT);
+}
+
+/* Agregamos método para encriptar la contraseña */
+UserSchema.methods.hashPassword = function (password) {
+    this.salt = crypto.randomBytes(16).toString('hex');
+    this.password = crypto.pbkdf2Sync(password, this.salt, 1000, 512, 'sha512').toString('hex');
 }
 
 mongoose.model('User', UserSchema, 'collectionUser');

@@ -20,3 +20,7 @@ const verificar = (password) =>{
 }
 
 console.log(verificar('contraseñaasdfasfasf'));
+
+console.log('============')
+
+console.log(crypto.randomBytes(16).toString('hex'));

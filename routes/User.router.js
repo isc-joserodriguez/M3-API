@@ -12,7 +12,7 @@ const express = require('express'),
 router.post('/signup', signup);
 router.post('/login', login);
 router.get('/', auth, getUsers);
-router.put('/', updateUser);
+router.put('/', auth, updateUser);
 router.delete('/:id', deleteUser);
 
 module.exports = router;
