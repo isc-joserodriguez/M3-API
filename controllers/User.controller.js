@@ -1,6 +1,5 @@
 const mongoose = require('mongoose'),
-    User = mongoose.model('User');
-
+    User = mongoose.model('User')
 /* const User = require('mongoose').model('User'); */
 
 const signup = async (req, res) => {
@@ -16,7 +15,7 @@ const signup = async (req, res) => {
     } catch (e) {
         return res.json({
             menssage: 'Error',
-            detail: e
+            detail: e.message
         })
     }
 }
@@ -39,11 +38,52 @@ const getUsers = async (req, res) => {
     } catch (e) {
         return res.json({
             menssage: 'Error',
-            detail: e
+            detail: e.message
         })
     }
 }
 
+const login = async (req, res) => {
+    try {
+        // Con desestructuración obtenemos los datos del body
+        const { mail, password } = req.body;
+
+        //Buscamos un usuario por su mail
+        const resp = await User.findOne({ mail });
+
+        // Si no lo encuentra a ningun usuario resp = null
+        // Si lo encuentra resp = registro en mongo
+
+        // Negamos la respuesta para que entre en el if si no encuentra el elemento
+        if (!resp) {
+            return res.json({
+                message: 'Error',
+                detail: 'Usuario no encontrado'
+            })
+        }
+
+        // Verificamos que la contraseña del body sea la misma que la de mongo
+        if (resp.password === password) {
+            return res.json({
+                message: 'Ok',
+                detail: resp
+            })
+        }
+
+        // Si las contraseñas no coinciden, regresar error
+        return res.json({
+            message: 'Error',
+            detail: 'Password Incorrecto!'
+        })
+
+    } catch (e) {
+        return res.json({
+            message: 'Error en el catch',
+            detail: e.message
+        })
+    }
+
+}
 const updateUser = async (req, res) => {
     try {
         const newData = req.body;
@@ -61,7 +101,7 @@ const updateUser = async (req, res) => {
     } catch (e) {
         return res.json({
             menssage: 'Error',
-            detail: e
+            detail: e.message
         })
     }
 }
@@ -77,7 +117,7 @@ const deleteUser = async (req, res) => {
     } catch (e) {
         return res.json({
             menssage: 'Error',
-            detail: e
+            detail: e.message
         })
     }
 }
@@ -87,4 +127,5 @@ module.exports = {
     getUsers,
     updateUser,
     deleteUser,
+    login
 }
