@@ -24,4 +24,10 @@ UserSchema.methods.hashPassword = function (password) {
     this.password = crypto.pbkdf2Sync(password, this.salt, 1000, 512, 'sha512').toString('hex');
 }
 
+/* Agregamos método para verificar la contraseña */
+UserSchema.methods.verifyPassword = function (password) {
+    const hashedPassword = crypto.pbkdf2Sync(password, this.salt, 1000, 512, 'sha512').toString('hex');
+    return hashedPassword === this.password;
+}
+
 mongoose.model('User', UserSchema, 'collectionUser');

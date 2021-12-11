@@ -11,6 +11,11 @@ const {
     getPosts
 } = require('./Post.controller')
 
+const {
+    createCategory,
+    getCategories
+} = require('./Category.controller')
+
 
 module.exports = {
     signup,
@@ -19,5 +24,7 @@ module.exports = {
     deleteUser,
     createPost,
     getPosts,
-    login
+    login,
+    createCategory,
+    getCategories
 }

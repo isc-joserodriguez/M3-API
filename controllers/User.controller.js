@@ -45,7 +45,7 @@ const login = async (req, res) => {
         }
 
         // Verificamos que la contraseña del body sea la misma que la de mongo
-        if (resp.password === password) {
+        if (resp.verifyPassword(password)) {
             return res.json({
                 message: 'Ok',
                 detail: resp.generateJWT()
