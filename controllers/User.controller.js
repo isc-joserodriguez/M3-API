@@ -25,30 +25,6 @@ const signup = async (req, res) => {
     }
 }
 
-const getUsers = async (req, res) => {
-    console.log(req.campo.idUser)
-    try {
-        const resp = await User.find();
-
-        if (resp.length === 0) {
-            return res.json({
-                menssage: 'Error',
-                detail: 'No hay registros'
-            })
-        } else {
-            return res.json({
-                menssage: 'USers',
-                detail: resp
-            })
-        }
-    } catch (e) {
-        return res.json({
-            menssage: 'Error',
-            detail: e.message
-        })
-    }
-}
-
 const login = async (req, res) => {
     try {
         // Con desestructuración obtenemos los datos del body
@@ -89,6 +65,30 @@ const login = async (req, res) => {
         })
     }
 
+}
+
+const getUsers = async (req, res) => {
+    console.log(req.campo.idUser)
+    try {
+        const resp = await User.find();
+
+        if (resp.length === 0) {
+            return res.json({
+                menssage: 'Error',
+                detail: 'No hay registros'
+            })
+        } else {
+            return res.json({
+                menssage: 'USers',
+                detail: resp
+            })
+        }
+    } catch (e) {
+        return res.json({
+            menssage: 'Error',
+            detail: e.message
+        })
+    }
 }
 const updateUser = async (req, res) => {
     try {
