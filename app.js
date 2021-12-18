@@ -7,12 +7,14 @@ require('./models');
 /* 3.- Instanciar Express & Mongoose */
 const express = require('express'),
     mongoose = require('mongoose'),
-    routes = require('./routes');
+    routes = require('./routes'),
+    cors = require('cors');
 
 /* 4.- Inicializamos Express */
 const app = express();
 
 /* 5.- Middlewares */
+app.use(cors());
 app.use(express.json());
 
 /* 6.- Conexión con la base de datos */

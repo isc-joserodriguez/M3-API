@@ -5,7 +5,7 @@ const jwt = require('express-jwt'),
 const auth = jwt({
     secret: secret,
     algorithms: ['HS256'],
-    userProperty: 'campo',
+    userProperty: 'user',
     getToken: function (req) {
         let { authorization } = req.headers;
 

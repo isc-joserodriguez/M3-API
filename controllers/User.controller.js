@@ -68,7 +68,7 @@ const login = async (req, res) => {
 }
 
 const getUsers = async (req, res) => {
-    console.log(req.campo.idUser)
+    console.log(req?.user?.idUser)
     try {
         const resp = await User.find();
 
