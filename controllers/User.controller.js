@@ -13,12 +13,12 @@ const signup = async (req, res) => {
         // Guardamos al USUARIO
         const resp = await user.save();
 
-        return res.json({
+        return res.status(200).json({
             menssage: 'User created successfully',
             detail: resp.generateJWT()
         })
     } catch (e) {
-        return res.json({
+        return res.status(400).json({
             menssage: 'Error',
             detail: e.message
         })
@@ -38,7 +38,7 @@ const login = async (req, res) => {
 
         // Negamos la respuesta para que entre en el if si no encuentra el elemento
         if (!resp) {
-            return res.json({
+            return res.status(404).json({
                 message: 'Error',
                 detail: 'Usuario no encontrado'
             })
@@ -46,20 +46,20 @@ const login = async (req, res) => {
 
         // Verificamos que la contraseña del body sea la misma que la de mongo
         if (resp.verifyPassword(password)) {
-            return res.json({
+            return res.status(200).json({
                 message: 'Ok',
                 detail: resp.generateJWT()
             })
         }
 
         // Si las contraseñas no coinciden, regresar error
-        return res.json({
+        return res.status(400).json({
             message: 'Error',
             detail: 'Password Incorrecto!'
         })
 
     } catch (e) {
-        return res.json({
+        return res.status(400).json({
             message: 'Error en el catch',
             detail: e.message
         })
