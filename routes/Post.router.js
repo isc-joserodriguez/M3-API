@@ -7,7 +7,7 @@ const express = require('express'),
     } = require('../controllers');
 
 router.post('/', auth, createPost);
-router.get('/', getPosts);
+router.get('/', auth, getPosts);
 
 
 module.exports = router;
