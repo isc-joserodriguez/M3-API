@@ -7,6 +7,7 @@ const mongoose = require('mongoose'),
 const UserSchema = new mongoose.Schema({
     firstname: { type: String, required: true },
     lastname: { type: String, default: 'Perez' },
+    type: { type: String, default: 'client' },
     dob: { type: Date },
     mail: { type: String, required: [true, 'Se requiere el email'] },
     password: { type: String },
@@ -15,7 +16,7 @@ const UserSchema = new mongoose.Schema({
 
 /* Agregamos método para generar token */
 UserSchema.methods.generateJWT = function () {
-    return jwt.sign({ idUser: this._id }, process.env.SECRET_JWT);
+    return jwt.sign({ idUser: this._id, type: this.type }, process.env.SECRET_JWT);
 }
 
 /* Agregamos método para encriptar la contraseña */

@@ -6,10 +6,10 @@ const signup = async (req, res) => {
     try {
         // Creamos una instancia de USUARIO
         const user = new User(req.body);
-        
+
         //Encriptar contraseña
         user.hashPassword(req.body.password)
-        
+
         // Guardamos al USUARIO
         const resp = await user.save();
 
@@ -68,7 +68,12 @@ const login = async (req, res) => {
 }
 
 const getUsers = async (req, res) => {
-    console.log(req?.user?.idUser)
+    if (req.user.type === 'client') {
+        return res.json({
+            menssage: 'Error',
+            detail: 'Sólo los admins pueden hacer esto.'
+        })
+    }
     try {
         const resp = await User.find();
 
