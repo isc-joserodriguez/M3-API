@@ -7,7 +7,7 @@ const express = require('express'),
     } = require('../controllers');
 
 router.post('/', auth, createCategory);
-router.get('/', getCategories);
+router.get('/', auth, getCategories);
 
 
 module.exports = router;
