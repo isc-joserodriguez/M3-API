@@ -68,7 +68,7 @@ const login = async (req, res) => {
 }
 
 const getUsers = async (req, res) => {
-    if (req.user.type === 'client') {
+    if (req?.user?.type === 'client') {
         return res.json({
             menssage: 'Error',
             detail: 'Sólo los admins pueden hacer esto.'
