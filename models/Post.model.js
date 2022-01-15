@@ -2,23 +2,24 @@
 const mongoose = require('mongoose');
 
 /* Creamos nuestro Schema */
-const PostSchema = new mongoose.Schema({
-    title: { type: String },
-    body: { type: String },
-    image: { type: String },
-    visibility: { type: Boolean, default: true},
-    category: { type: mongoose.ObjectId, ref: 'Category' },
-    user: { type: mongoose.ObjectId, ref: 'User' },
-    test1: {
-        campoA: { type: String },
-        campoB: { type: Number },
+const PostSchema = new mongoose.Schema(
+    {
+        visibility: { type: Boolean, default: true },
+        user: { type: mongoose.ObjectId, ref: 'User' },
+        info: {
+            title: { type: String },
+            body: { type: String },
+            image: { type: String },
+        },
+        categories: [{ type: mongoose.ObjectId, ref: 'Category' }],
+        tags: [
+            {
+                tagID: { type: String },
+                tagName: { type: String },
+            }
+        ],
     },
-    test2: [
-        {
-            campoC: { type: String },
-            campoD: { type: Number },
-        }
-    ]
-});
+    { timestamps: true }
+);
 
 mongoose.model('Post', PostSchema, 'collectionPost');

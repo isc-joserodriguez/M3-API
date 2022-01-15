@@ -12,12 +12,15 @@ const {
     createPost,
     getPosts,
     getPublicPosts,
-    getMyPosts
+    getMyPosts,
+    filterCategory,
+    filterTagID,
+    addCategory
 } = require('./Post.controller')
 
 const {
     createCategory,
-    getCategories,
+    getCategories
 } = require('./Category.controller')
 
 
@@ -34,5 +37,8 @@ module.exports = {
     login,
     createCategory,
     getCategories,
-    changePasssword
+    changePasssword,
+    filterCategory,
+    filterTagID,
+    addCategory
 }

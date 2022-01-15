@@ -15,7 +15,7 @@ const createPost = async (req, res) => {
 
         return res.json({
             menssage: 'Post created successfully',
-            detail: await resp.populate('category'),
+            detail: await resp.populate('categories'),
         });
     } catch (e) {
         return res.json({
@@ -27,7 +27,100 @@ const createPost = async (req, res) => {
 
 const getPosts = async (req, res) => {
     try {
-        const resp = await Post.find().populate('category').populate('user');
+        const resp = await Post.find().populate('categories').populate('user');
+
+        if (resp.length === 0) {
+            return res.status(404).json({
+                menssage: 'Error',
+                detail: 'No hay registros'
+            })
+        } else {
+            return res.json({
+                menssage: 'Posts',
+                detail: resp
+            })
+        }
+    } catch (e) {
+        return res.status(400).json({
+            menssage: 'Error',
+            detail: e.message
+        })
+    }
+}
+
+const filterCategory = async (req, res) => {
+    try {
+        const resp = await Post.find({ categories: req.params.category }).populate('categories').populate('user');
+
+        if (resp.length === 0) {
+            return res.status(404).json({
+                menssage: 'Error',
+                detail: 'No hay registros'
+            })
+        } else {
+            return res.json({
+                menssage: 'Posts',
+                detail: resp
+            })
+        }
+    } catch (e) {
+        return res.status(400).json({
+            menssage: 'Error',
+            detail: e.message
+        })
+    }
+}
+
+const filterTagID = async (req, res) => {
+    try {
+        const resp = await Post.find({ "tags.tagID": req.params.tagId }).populate('categories').populate('user');
+
+        if (resp.length === 0) {
+            return res.status(404).json({
+                menssage: 'Error',
+                detail: 'No hay registros'
+            })
+        } else {
+            return res.json({
+                menssage: 'Posts',
+                detail: resp
+            })
+        }
+    } catch (e) {
+        return res.status(400).json({
+            menssage: 'Error',
+            detail: e.message
+        })
+    }
+}
+
+const addCategory = async (req, res) => {
+    try {
+        /* const resp = await Post.findByIdAndUpdate(
+            req.params.id,
+            {
+                $push:{
+                    tags:{
+                        "tagID": "5",
+                        "tagName": "nuevo",
+                    }
+                }
+            }
+        ).populate('categories').populate('user'); */
+
+        const resp = await Post.findOneAndUpdate(
+            {
+                _id: req.params.id,
+                "tags._id": "61e3268ecd5e0e91553c5aee"
+            },
+
+            {
+                $set: {
+                    "tags.$.tagName": "hola!!!",
+                }
+            }
+        ).populate('categories').populate('user');
+
 
         if (resp.length === 0) {
             return res.status(404).json({
@@ -142,5 +235,8 @@ module.exports = {
     createPost,
     getPosts,
     getPublicPosts,
-    getMyPosts
+    getMyPosts,
+    filterCategory,
+    filterTagID,
+    addCategory
 }
