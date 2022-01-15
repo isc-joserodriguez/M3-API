@@ -150,11 +150,53 @@ const getInfo = async (req, res) => {
     }
 }
 
+const changePasssword = async (req, res) => {
+    /**
+     * 1.- Verificar la contraseña anterior
+     * 2.- Pido las nuevas contraseñas
+     * 3.- Encripto la nueva contraseñas
+     * 4.- Actualizo el registro
+     */
+    try {
+        const { oldPassword, newPassword } = req.body;
+
+        const user = await User.findById(req.user.idUser);
+
+        // 1.- Verificar la contraseña anterior
+        if (!user.verifyPassword(oldPassword)) {
+            return res.status(400).json({
+                message: 'Error',
+                detail: 'Contraseña incorrecta'
+            })
+        }
+
+        // 3.- Encripto la nueva contraseña
+        const { password, salt } = user.hashedPassword(newPassword);
+
+        const resp = await User.findByIdAndUpdate(
+            req.user.idUser,
+            { $set: { password, salt } },
+            { new: true }
+        )
+
+        return res.json({
+            menssage: 'Contraseña actualizada',
+            detail: resp
+        })
+    } catch (e) {
+        return res.json({
+            menssage: 'Error',
+            detail: e.message
+        })
+    }
+}
+
 module.exports = {
     signup,
     getUsers,
     updateUser,
     deleteUser,
     getInfo,
+    changePasssword,
     login
 }

@@ -7,7 +7,8 @@ const express = require('express'),
         updateUser,
         deleteUser,
         login,
-        getInfo
+        getInfo,
+        changePasssword
     } = require('../controllers');
 
 router.post('/signup', signup);
@@ -16,5 +17,6 @@ router.get('/', getUsers);
 router.get('/info', auth, getInfo);
 router.put('/', auth, updateUser);
 router.delete('/:id', deleteUser);
+router.post('/changePassword', auth, changePasssword);
 
 module.exports = router;

@@ -8,8 +8,8 @@ const mongoose = require('mongoose'),
 const UserSchema = new mongoose.Schema({
     firstname: { type: String, required: true },
     lastname: { type: String, default: 'Perez' },
-    type: { 
-        type: String, 
+    type: {
+        type: String,
         default: 'client',
         enum: [
             'client',
@@ -20,15 +20,15 @@ const UserSchema = new mongoose.Schema({
     },
     numero: {
         type: Number,
-        min:[0, 'El mínimo es 0'],
-        max:[10, 'El máximo es 10'],
+        min: [0, 'El mínimo es 0'],
+        max: [10, 'El máximo es 10'],
     },
     dob: { type: Date },
     mail: {
         type: String,
         required: [true, 'Se requiere el email'],
         unique: true,
-        match:[/\S+@\S+\.\S+/, 'Email invalido']
+        match: [/\S+@\S+\.\S+/, 'Email invalido']
     },
     password: { type: String },
     salt: { type: String }
@@ -45,6 +45,13 @@ UserSchema.methods.generateJWT = function () {
 UserSchema.methods.hashPassword = function (password) {
     this.salt = crypto.randomBytes(16).toString('hex');
     this.password = crypto.pbkdf2Sync(password, this.salt, 1000, 512, 'sha512').toString('hex');
+}
+
+UserSchema.methods.hashedPassword = function (passwordParam) {
+    const salt = crypto.randomBytes(16).toString('hex');
+    const password = crypto.pbkdf2Sync(passwordParam, salt, 1000, 512, 'sha512').toString('hex');
+
+    return { password, salt }
 }
 
 /* Agregamos método para verificar la contraseña */

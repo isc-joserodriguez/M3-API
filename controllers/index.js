@@ -4,7 +4,8 @@ const {
     updateUser,
     deleteUser,
     login,
-    getInfo
+    getInfo,
+    changePasssword
 } = require('./User.controller');
 
 const {
@@ -32,5 +33,6 @@ module.exports = {
     getMyPosts,
     login,
     createCategory,
-    getCategories
+    getCategories,
+    changePasssword
 }
