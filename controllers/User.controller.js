@@ -133,6 +133,22 @@ const deleteUser = async (req, res) => {
     }
 }
 
+const getInfo = async (req, res) => {
+    try {
+        //! Obtenemos en ID del token
+        const resp = await User.findById(req.user.idUser);
+        return res.json({
+            menssage: 'User',
+            detail: resp
+        })
+    } catch (e) {
+        return res.json({
+            menssage: 'Error',
+            detail: e.message
+        })
+    }
+}
+
 module.exports = {
     signup,
     getUsers,
