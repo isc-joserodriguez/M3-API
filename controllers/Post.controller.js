@@ -30,7 +30,7 @@ const getPosts = async (req, res) => {
         const resp = await Post.find().populate('category').populate('user');
 
         if (resp.length === 0) {
-            return res.json({
+            return res.status(404).json({
                 menssage: 'Error',
                 detail: 'No hay registros'
             })
@@ -41,7 +41,7 @@ const getPosts = async (req, res) => {
             })
         }
     } catch (e) {
-        return res.json({
+        return res.status(400).json({
             menssage: 'Error',
             detail: e.message
         })
@@ -54,17 +54,20 @@ const getPublicPosts = async (req, res) => {
         // Si no encuentra nada, resp = null
         // Si encuentra al menos 1, resp = [registros]
         if (resp.length == 0) {
-            return res.json({
+            return res.status(404).json({
                 menssage: 'Error',
                 detail: 'No hay registros'
             })
         }
-        return res.json({
+        return res.status(200).json({
             menssage: 'Posts',
             detail: resp,
         })
     } catch (e) {
-
+        return res.status(400).json({
+            menssage: 'Error',
+            detail: e.message
+        })
     }
 }
 
@@ -75,8 +78,8 @@ const getMyPosts = async (req, res) => {
         // Si encuentra al menos 1, resp = [registros]
         if (resp.length == 0) {
             return res.json({
-                menssage: 'Error',
-                detail: 'No hay registros'
+                menssage: 'Sin registros',
+                detail: []
             })
         }
         return res.json({
@@ -84,7 +87,10 @@ const getMyPosts = async (req, res) => {
             detail: resp,
         })
     } catch (e) {
-
+        return res.status(400).json({
+            menssage: 'Error',
+            detail: e.message
+        })
     }
 }
 
