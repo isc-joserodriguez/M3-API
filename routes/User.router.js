@@ -6,12 +6,14 @@ const express = require('express'),
         getUsers,
         updateUser,
         deleteUser,
-        login
+        login,
+        getInfo
     } = require('../controllers');
 
 router.post('/signup', signup);
 router.post('/login', login);
 router.get('/', getUsers);
+router.get('/info', auth, getInfo);
 router.put('/', auth, updateUser);
 router.delete('/:id', deleteUser);
 

@@ -3,7 +3,8 @@ const {
     getUsers,
     updateUser,
     deleteUser,
-    login
+    login,
+    getInfo
 } = require('./User.controller');
 
 const {
@@ -24,6 +25,7 @@ module.exports = {
     getUsers,
     updateUser,
     deleteUser,
+    getInfo,
     createPost,
     getPosts,
     getPublicPosts,
