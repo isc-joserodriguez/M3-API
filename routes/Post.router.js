@@ -3,11 +3,15 @@ const express = require('express'),
     router = express.Router(),
     {
         createPost,
-        getPosts
+        getPosts,
+        getPublicPosts,
+        getMyPosts
     } = require('../controllers');
 
 router.post('/', auth, createPost);
 router.get('/', auth, getPosts);
+router.get('/public', getPublicPosts);
+router.get('/my-posts', auth, getMyPosts);
 
 
 module.exports = router;
